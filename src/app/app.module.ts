@@ -44,6 +44,7 @@ import { LottieAnimationViewModule } from 'ng-lottie';
     MatSelectModule,
     FormsModule,
     MatCheckboxModule,
+    MatFormFieldModule,
     LottieAnimationViewModule
   ],
   providers: [DogsService],

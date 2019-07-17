@@ -20,4 +20,9 @@ export class DogsService {
     return this.http.get(
       'https://dog.ceo/api/breed/' + breed + '/images/random/5', {});
   }
+  
+  
+  getSubBreeds(breed): Observable<any> {
+    return this.http.get('https://dog.ceo/api/breed/' + breed + '/hound/list/', {});
+  }
 }
