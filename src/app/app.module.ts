@@ -21,6 +21,7 @@ import { MatSelectModule } from '@angular/material';
 import { MatFormFieldModule } from '@angular/material';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LottieAnimationViewModule } from 'ng-lottie';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { LottieAnimationViewModule } from 'ng-lottie';
     FormsModule,
     MatCheckboxModule,
     MatFormFieldModule,
-    LottieAnimationViewModule
+    LottieAnimationViewModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [DogsService],
   bootstrap: [AppComponent]

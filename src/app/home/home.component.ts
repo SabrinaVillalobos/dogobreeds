@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { DogsService } from '../services/dogs.service';
-
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -11,6 +10,9 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
   public lottieConfig: Object;
   public cards = [];
   public allBreeds: Array<any>;
@@ -28,6 +30,27 @@ export class HomeComponent {
   ngOnInit() {
     this.getRandomPics();
     this.getAllBreeds();
+
+    this.dropdownList = [
+    ];
+    this.selectedItems = [
+    ];
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
   }
 
   getRandomPics() {
@@ -40,8 +63,7 @@ export class HomeComponent {
           for (let picture of randomPics) {
             this.cards.push({
               id: i++,
-              pic: picture,
-              likes: 0
+              pic: picture
             });
           }
         }
@@ -58,7 +80,7 @@ export class HomeComponent {
       data => {
         var jsonStr = JSON.stringify(data.message);
         var jsonParsed = JSON.parse(jsonStr);
-        this.allBreeds = Object.keys(jsonParsed);
+        this.dropdownList = Object.keys(jsonParsed);
         
         console.log("razaaaastest", this.allBreeds);
       },
@@ -83,8 +105,7 @@ export class HomeComponent {
           for (let picture of randomPics) {
             this.cards.push({
               id: i++,
-              pic: picture,
-              likes: 0
+              pic: picture
             });
           }
         }
@@ -94,8 +115,6 @@ export class HomeComponent {
       }
     );
   }
-
-  
   
 getSubBreeds(breed) {
   this.dogsService.getSubBreeds(breed).subscribe(
