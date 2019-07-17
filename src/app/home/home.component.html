@@ -1,0 +1,45 @@
+<div class="main-container">
+  <div class="row">
+    
+<div class="lottie-container">
+    <lottie-animation-view [options]="lottieConfig">
+    </lottie-animation-view>
+  </div>
+    <div class="col-sm-4 breed-dropdown">
+      <form>
+        <mat-form-field>
+          <mat-select placeholder="Select breed" [(ngModel)]="selectedValue" name="breed"
+            (ngModelChange)="selectedBreed($event)">
+            <mat-option *ngFor="let breed of allBreeds; let i =index" [value]="breed">
+              {{breed}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</div>
+<mat-divider></mat-divider>
+
+<div class="grid-container">
+  <mat-grid-list cols="2" style="padding: 5%">
+    <mat-card class="dashboard-card" *ngFor="let card of cards">
+      <mat-card-header>
+        <mat-card-title>Card {{card.id}}</mat-card-title>
+        <mat-card-subtitle>Breed:
+          <i>{{selectedValue}}</i>
+        </mat-card-subtitle>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <button mat-menu-item>Expand</button>
+          <button mat-menu-item (click)="closeCard(card)">Remove</button>
+        </mat-menu>
+      </mat-card-header>
+      <img mat-card-image src="{{card.pic}}" alt="Photo of a dog">
+    </mat-card>
+  </mat-grid-list>
+
+  <div class="col-sm-8" align="center">
+    <button mat-flat-button class="random-button" (click)="getRandomPics()" align="center">Show Random
+      Doggo</button>
+  </div>
+</div>
