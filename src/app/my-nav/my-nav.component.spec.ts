@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { MyNavComponent } from './my-nav.component';
 
@@ -16,6 +17,7 @@ describe('MyNavComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MyNavComponent],
+      schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],
       imports: [
         NoopAnimationsModule,
         LayoutModule,

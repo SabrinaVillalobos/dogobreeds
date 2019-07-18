@@ -6,8 +6,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { LottieAnimationViewModule } from 'ng-lottie';
 import { HomeComponent } from './home.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -16,6 +19,7 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
+      schemas: [ NO_ERRORS_SCHEMA ],
       imports: [
         NoopAnimationsModule,
         LayoutModule,
@@ -24,6 +28,9 @@ describe('HomeComponent', () => {
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
+        LottieAnimationViewModule,
+        NgMultiSelectDropDownModule,
+        HttpClientModule
       ]
     }).compileComponents();
   }));
@@ -37,4 +44,8 @@ describe('HomeComponent', () => {
   it('should compile', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should getRandomPics of dogs', () => {
+    component.getRandomPics();
+  })
 });

@@ -4,11 +4,13 @@ import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { DogsService } from '../services/dogs.service';
 import { FormControl } from '@angular/forms';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent {
   dropdownList = [];
   selectedItems = [];
@@ -17,6 +19,11 @@ export class HomeComponent {
   public cards = [];
   public allBreeds: Array<any>;
 
+  /**
+   *Creates an instance of HomeComponent.
+   * @param {DogsService} dogsService
+   * @memberof HomeComponent
+   */
   constructor(
     public dogsService: DogsService
   ) {
@@ -53,6 +60,11 @@ export class HomeComponent {
     console.log(items);
   }
 
+  /**
+   * Shows random pictures of dogs
+   *
+   * @memberof HomeComponent
+   */
   getRandomPics() {
     this.cards = [];
     this.dogsService.getRandomPics().subscribe(
@@ -75,6 +87,11 @@ export class HomeComponent {
   }
   
 
+  /**
+   * Displays a list of all breeds
+   *
+   * @memberof HomeComponent
+   */
   getAllBreeds() {
     this.dogsService.getAllBreeds().subscribe(
       data => {
@@ -91,6 +108,12 @@ export class HomeComponent {
   }
 
   
+  /**
+   * Gets random pictures of selected breed
+   *
+   * @param {string} selectedBreed
+   * @memberof HomeComponent
+   */
   selectedBreed(selectedBreed: string) {
     console.log("raza seleccionada",selectedBreed);
     this.getRandomPicsForBreed(selectedBreed);
