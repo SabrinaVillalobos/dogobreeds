@@ -114,29 +114,31 @@ export class HomeComponent {
    * @param {string} selectedBreed
    * @memberof HomeComponent
    */
-  selectedBreed(selectedBreed: string) {
-    console.log("raza seleccionada",selectedBreed);
-    this.getRandomPicsForBreed(selectedBreed);
+  selectedBreed(selectedBreed: any) {
+    console.log("raza seleccionada",this.selectedItems);
+    this.getRandomPicsForBreed(this.selectedItems);
   }
 
-  getRandomPicsForBreed(breed) {
+  getRandomPicsForBreed(breeds) {
     this.cards = [];
-    this.dogsService.getRandomPicsForBreed(breed).subscribe(
-      data => {
-        const randomPics = data.message;
-        for (var i = 1; i < randomPics.length; i++) {
-          for (let picture of randomPics) {
-            this.cards.push({
-              id: i++,
-              pic: picture
-            });
+    for (let breed of breeds) {
+      this.dogsService.getRandomPicsForBreed(breed).subscribe(
+        data => {
+          const randomPics = data.message;
+          for (var i = 1; i < randomPics.length; i++) {
+            for (let picture of randomPics) {
+              this.cards.push({
+                id: i++,
+                pic: picture
+              });
+            }
           }
+        },
+        error => {
+          console.log('error');
         }
-      },
-      error => {
-        console.log('error');
-      }
-    );
+      );
+    };
   }
   
 getSubBreeds(breed) {
