@@ -16,6 +16,17 @@
 (onSelectAll)="onSelectAll($event)"
 >
 </ng-multiselect-dropdown>
+
+
+<ng-multiselect-dropdown class="multi-dropdown"
+[placeholder]="'Select sub-breed'"
+[data]="dropdownList2"
+[(ngModel)]="selectedItems2"
+[settings]="dropdownSettings"
+(onSelect)="selectedBreed($event)"
+(onSelectAll)="onSelectAll($event)"
+>
+</ng-multiselect-dropdown>
     </div>
   </div>
 </div>

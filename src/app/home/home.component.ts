@@ -14,6 +14,8 @@ import { FormControl } from '@angular/forms';
 export class HomeComponent {
   dropdownList = [];
   selectedItems = [];
+  dropdownList2 = [];
+  selectedItems2 = [];
   dropdownSettings = {};
   public lottieConfig: Object;
   public cards = [];
@@ -52,6 +54,10 @@ export class HomeComponent {
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
+
+    
+    this.dropdownList2 = [
+    ];
   }
 
   onItemSelect(item: any) {
@@ -100,7 +106,7 @@ export class HomeComponent {
         var jsonParsed = JSON.parse(jsonStr);
         this.dropdownList = Object.keys(jsonParsed);
         
-        console.log("razaaaastest", this.allBreeds);
+        console.log("razaaaastest", this.dropdownList);
       },
       error => {
         console.log('error');
@@ -122,6 +128,10 @@ export class HomeComponent {
   }
   
 
+  /**
+   * Gets random pics for breed
+   * @param breeds 
+   */
   getRandomPicsForBreed(breeds) {
     this.cards = [];
     for (let breed of breeds) {
@@ -144,14 +154,18 @@ export class HomeComponent {
     };
   }
   
+/**
+ * Gets sub breeds
+ * @param breed 
+ */
 getSubBreeds(breed) {
   this.dogsService.getSubBreeds(breed).subscribe(
     data => {
       var jsonStr = JSON.stringify(data.message);
       var jsonParsed = JSON.parse(jsonStr);
-      this.allSubBreeds = Object.keys(jsonParsed);
+      this.dropdownList2 = Object.keys(jsonParsed);
       
-      console.log("subreed testestes", this.allSubBreeds);
+      console.log("subreed testestes", this.dropdownList2);
     },
     error => {
       console.log('error');
@@ -159,6 +173,10 @@ getSubBreeds(breed) {
   );
 }
 
+/**
+ * Gets random pics for sub breed
+ * @param breeds 
+ */
 getRandomPicsForSubBreed(breeds) {
   this.cards = [];
   for (let breed of breeds) {
