@@ -18,6 +18,7 @@ export class HomeComponent {
   public lottieConfig: Object;
   public cards = [];
   public allBreeds: Array<any>;
+  public allSubBreeds: Array<any>;
 
   /**
    *Creates an instance of HomeComponent.
@@ -106,7 +107,6 @@ export class HomeComponent {
       }
     );
   }
-
   
   /**
    * Gets random pictures of selected breed
@@ -117,7 +117,10 @@ export class HomeComponent {
   selectedBreed(selectedBreed: any) {
     console.log("raza seleccionada",this.selectedItems);
     this.getRandomPicsForBreed(this.selectedItems);
+    
+    this.getSubBreeds(this.selectedItems);
   }
+  
 
   getRandomPicsForBreed(breeds) {
     this.cards = [];
@@ -146,14 +149,36 @@ getSubBreeds(breed) {
     data => {
       var jsonStr = JSON.stringify(data.message);
       var jsonParsed = JSON.parse(jsonStr);
-      this.allBreeds = Object.keys(jsonParsed);
+      this.allSubBreeds = Object.keys(jsonParsed);
       
-      console.log("subreed testestes", this.allBreeds);
+      console.log("subreed testestes", this.allSubBreeds);
     },
     error => {
       console.log('error');
     }
   );
+}
+
+getRandomPicsForSubBreed(breeds) {
+  this.cards = [];
+  for (let breed of breeds) {
+    this.dogsService.getRandomPicsForSubBreed(breed).subscribe(
+      data => {
+        const randomPics = data.message;
+        for (var i = 1; i < randomPics.length; i++) {
+          for (let picture of randomPics) {
+            this.cards.push({
+              id: i++,
+              pic: picture
+            });
+          }
+        }
+      },
+      error => {
+        console.log('error');
+      }
+    );
+  };
 }
 
 }
