@@ -66,6 +66,9 @@ export class HomeComponent {
   onSelectAll(items: any) {
     console.log(items);
   }
+  onItemDeSelect(items: any){
+    console.log("deselect", items);
+  }
 
   /**
    * Shows random pictures of dogs
@@ -123,7 +126,6 @@ export class HomeComponent {
   selectedBreed(selectedBreed: any) {
     console.log("raza seleccionada",this.selectedItems);
     this.getRandomPicsForBreed(this.selectedItems);
-    
     this.getSubBreeds(this.selectedItems);
   }
   
@@ -134,6 +136,7 @@ export class HomeComponent {
    */
   getRandomPicsForBreed(breeds) {
     this.cards = [];
+    this.selectedItems = this.selectedItems.filter(item => item !== this.onItemDeSelect(item));
     for (let breed of breeds) {
       this.dogsService.getRandomPicsForBreed(breed).subscribe(
         data => {
@@ -163,7 +166,7 @@ getSubBreeds(breed) {
     data => {
       var jsonStr = JSON.stringify(data.message);
       var jsonParsed = JSON.parse(jsonStr);
-      this.dropdownList2 = Object.keys(jsonParsed);
+      this.dropdownList2 = jsonParsed;
       
       console.log("subreed testestes", this.dropdownList2);
     },
