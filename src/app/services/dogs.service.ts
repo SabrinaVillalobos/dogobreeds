@@ -17,11 +17,11 @@ export class DogsService {
     return this.http.get("https://dog.ceo/api/breeds/list/all", {});
   }
 
-  getRandomPicsForBreed(breed): Observable<any> {
+  getRandomPicsForBreed(breed: string): Observable<any> {
     return this.http.get(
       'https://dog.ceo/api/breed/' + breed + '/images/random/5', {});
   }
-  
+
   getSubBreeds(breed: string): Observable<any> {
     return this.http.get('https://dog.ceo/api/breed/' + breed + '/list/', {});
   }

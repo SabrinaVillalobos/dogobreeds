@@ -43,6 +43,10 @@
   color: #fff;
 }
 
+.random-button-container{
+  text-align: center;
+}
+
 .card-container{
   padding: 5%;
 }
@@ -50,8 +54,4 @@
 .breed-dropdown{
   border:none;
   width:90%;
-}
-
-.multiselect-dropdown{
-  background:#ce563a;
 }

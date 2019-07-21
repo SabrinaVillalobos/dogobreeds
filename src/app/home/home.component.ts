@@ -15,12 +15,12 @@ export class HomeComponent {
   selectedItems2 = [];
   subBreed = [];
   breeed = [];
+  value = [];
   dropdownSettings = {};
   public lottieConfig: Object;
   public cards = [];
   public allBreeds: Array<any>;
   public allSubBreeds: Array<any>;
-
 
   /**
    *Creates an instance of HomeComponent.
@@ -30,6 +30,7 @@ export class HomeComponent {
   constructor(
     public dogsService: DogsService
   )
+
    /**
    *Lottie animation configuration.
    */ {
@@ -39,7 +40,6 @@ export class HomeComponent {
       loop: true
     };
   }
-
   ngOnInit() {
     this.getAllBreeds();
 
@@ -49,6 +49,12 @@ export class HomeComponent {
     ];
     this.selectedItems2 = [
     ];
+    this.dropdownList2 = [
+    ];
+
+    /**
+     * settings of ng-multiselect-dropdown
+     */
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'item_id',
@@ -58,10 +64,6 @@ export class HomeComponent {
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
-
-
-    this.dropdownList2 = [
-    ];
   }
 
   onItemSelect(item: any) {
@@ -69,9 +71,8 @@ export class HomeComponent {
   onSelectAll(items: any) {
   }
 
-
   /**
-   * Shows random pictures of dogs
+   * Gets random pictures of dogs
    *
    * @memberof HomeComponent
    */
@@ -95,9 +96,8 @@ export class HomeComponent {
     )
   }
 
-
   /**
-   * Displays a list of all breeds
+   * Displays a list of all dog breeds
    *
    * @memberof HomeComponent
    */
@@ -107,7 +107,6 @@ export class HomeComponent {
         var jsonStr = JSON.stringify(data.message);
         var jsonParsed = JSON.parse(jsonStr);
         this.dropdownList = Object.keys(jsonParsed);
-
       },
       error => {
         console.log('error');
@@ -115,9 +114,8 @@ export class HomeComponent {
     );
   }
 
-
   /**
-   * Gets random pics for breed
+   * Gets random pics of selected breed
    * @param breeds 
    */
   getRandomPicsForBreed(breeds) {
@@ -130,7 +128,8 @@ export class HomeComponent {
             for (let picture of randomPics) {
               this.cards.push({
                 id: i++,
-                pic: picture
+                pic: picture,
+                breed: breed
               });
             }
           }
@@ -142,13 +141,19 @@ export class HomeComponent {
     };
   }
 
+  /**
+   * When one selection deleted refresh selected breeds
+   * if none is selected cleans all cards
+   * @param {*} items
+   * @memberof HomeComponent
+   */
   onItemDeSelect(items: any) {
     if (this.selectedItems.length > 0) {
       this.selectedBreed(items);
     } else {
       this.cards = [];
     }
-  } 
+  }
 
   /**
    * Gets sub breeds
@@ -160,8 +165,6 @@ export class HomeComponent {
         var jsonStr = JSON.stringify(data.message);
         var jsonParsed = JSON.parse(jsonStr);
         this.dropdownList2 = jsonParsed;
-        console.log("subbreed", this.dropdownList2)
-
       },
       error => {
         console.log('No sub breeds for this breed');
@@ -169,7 +172,7 @@ export class HomeComponent {
     );
   }
   /**
-   * Gets random pictures of selected breed
+   * Calls random pictures of selected breed when one breed is selected
    *
    * @param {string} selectedBreed
    * @memberof HomeComponent
@@ -180,8 +183,14 @@ export class HomeComponent {
       this.getRandomPicsForBreed(this.selectedItems);
     }
   }
-  
-  selectedSubBreed(subBreed) {
+
+  /**
+   * Calls random picture for sub breed when one sub breed is selected
+   *
+   * @param {*} subBreed
+   * @memberof HomeComponent
+   */
+  selectedSubBreed(subBreed: any) {
     if (this.selectedItems.length > 0) {
       this.getRandomPicsForSubBreed(this.selectedItems, subBreed);
     }
@@ -190,8 +199,7 @@ export class HomeComponent {
    * Gets random pics for sub breed
    * @param breeds 
    */
-
-  getRandomPicsForSubBreed(breeds, subBreed) {
+  getRandomPicsForSubBreed(breeds: any, subBreed: any) {
     this.cards = [];
     for (let breed of breeds) {
       this.dogsService.getRandomPicsForSubBreed(breed, subBreed).subscribe(
@@ -201,7 +209,9 @@ export class HomeComponent {
             for (let picture of randomPics) {
               this.cards.push({
                 id: i++,
-                pic: picture
+                pic: picture,
+                breed: breed,
+                subbreed: subBreed
               });
             }
           }
