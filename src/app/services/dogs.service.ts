@@ -22,12 +22,12 @@ export class DogsService {
       'https://dog.ceo/api/breed/' + breed + '/images/random/5', {});
   }
   
-  getSubBreeds(breed): Observable<any> {
+  getSubBreeds(breed: string): Observable<any> {
     return this.http.get('https://dog.ceo/api/breed/' + breed + '/list/', {});
   }
 
-  getRandomPicsForSubBreed(breed): Observable<any> {
+  getRandomPicsForSubBreed(breed: string, subBreed: string): Observable<any> {
     return this.http.get(
-      'https://dog.ceo/api/breed/' + breed + '/images/random/5', {});
+      'https://dog.ceo/api/breed/' + breed + '/' + subBreed + '/images/random/5', {});
   }
 }

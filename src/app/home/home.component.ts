@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { DogsService } from '../services/dogs.service';
-import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -16,11 +13,14 @@ export class HomeComponent {
   selectedItems = [];
   dropdownList2 = [];
   selectedItems2 = [];
+  subBreed = [];
+  breeed = [];
   dropdownSettings = {};
   public lottieConfig: Object;
   public cards = [];
   public allBreeds: Array<any>;
   public allSubBreeds: Array<any>;
+
 
   /**
    *Creates an instance of HomeComponent.
@@ -29,12 +29,15 @@ export class HomeComponent {
    */
   constructor(
     public dogsService: DogsService
-  ) {
-  this.lottieConfig = {
-    path: "assets/json/dog-lottie.json",
-    autoplay: true,
-    loop: true
-  };
+  )
+   /**
+   *Lottie animation configuration.
+   */ {
+    this.lottieConfig = {
+      path: "assets/json/dog-lottie.json",
+      autoplay: true,
+      loop: true
+    };
   }
 
   ngOnInit() {
@@ -56,7 +59,7 @@ export class HomeComponent {
       allowSearchFilter: true
     };
 
-    
+
     this.dropdownList2 = [
     ];
   }
@@ -91,7 +94,7 @@ export class HomeComponent {
       }
     )
   }
-  
+
 
   /**
    * Displays a list of all breeds
@@ -104,14 +107,14 @@ export class HomeComponent {
         var jsonStr = JSON.stringify(data.message);
         var jsonParsed = JSON.parse(jsonStr);
         this.dropdownList = Object.keys(jsonParsed);
-        
+
       },
       error => {
         console.log('error');
       }
     );
   }
-  
+
 
   /**
    * Gets random pics for breed
@@ -119,7 +122,7 @@ export class HomeComponent {
    */
   getRandomPicsForBreed(breeds) {
     this.cards = [];
-     for (let breed of breeds) {
+    for (let breed of breeds) {
       this.dogsService.getRandomPicsForBreed(breed).subscribe(
         data => {
           const randomPics = data.message;
@@ -139,64 +142,75 @@ export class HomeComponent {
     };
   }
 
-   onItemDeSelect(items: any){
-    if (this.selectedItems.length > 0 ){
-      this.selectedBreed('');
+  onItemDeSelect(items: any) {
+    if (this.selectedItems.length > 0) {
+      this.selectedBreed(items);
+    } else {
+      this.cards = [];
     }
+  } 
+
+  /**
+   * Gets sub breeds
+   * @param breed 
+   */
+  getSubBreeds(subBreed) {
+    this.dogsService.getSubBreeds(subBreed).subscribe(
+      data => {
+        var jsonStr = JSON.stringify(data.message);
+        var jsonParsed = JSON.parse(jsonStr);
+        this.dropdownList2 = jsonParsed;
+        console.log("subbreed", this.dropdownList2)
+
+      },
+      error => {
+        console.log('No sub breeds for this breed');
+      }
+    );
   }
-  
-/**
- * Gets sub breeds
- * @param breed 
- */
-getSubBreeds(breed) {
-  this.dogsService.getSubBreeds(breed).subscribe(
-    data => {
-      var jsonStr = JSON.stringify(data.message);
-      var jsonParsed = JSON.parse(jsonStr);
-      this.dropdownList2 = jsonParsed;
-      
-    },
-    error => {
-      console.log('No sub breeds for this breed');
-    }
-  );
-}
   /**
    * Gets random pictures of selected breed
    *
    * @param {string} selectedBreed
    * @memberof HomeComponent
    */
-  selectedBreed(selectedBreed: any) {
-    this.getRandomPicsForBreed(this.selectedItems);
+  selectedBreed(selBreed) {
+    if (selBreed.length > 0) {
+      this.getSubBreeds(selBreed);
+      this.getRandomPicsForBreed(this.selectedItems);
+    }
   }
+  
+  selectedSubBreed(subBreed) {
+    if (this.selectedItems.length > 0) {
+      this.getRandomPicsForSubBreed(this.selectedItems, subBreed);
+    }
+  }
+  /**
+   * Gets random pics for sub breed
+   * @param breeds 
+   */
 
-/**
- * Gets random pics for sub breed
- * @param breeds 
- */
-
-getRandomPicsForSubBreed(breeds) {
-  this.cards = [];
-   for (let breed of breeds) {
-    this.dogsService.getRandomPicsForSubBreed(breed).subscribe(
-      data => {
-        const randomPics = data.message;
-        for (var i = 1; i < randomPics.length; i++) {
-          for (let picture of randomPics) {
-            this.cards.push({
-              id: i++,
-              pic: picture
-            });
+  getRandomPicsForSubBreed(breeds, subBreed) {
+    this.cards = [];
+    for (let breed of breeds) {
+      this.dogsService.getRandomPicsForSubBreed(breed, subBreed).subscribe(
+        data => {
+          const randomPics = data.message;
+          for (var i = 1; i < randomPics.length; i++) {
+            for (let picture of randomPics) {
+              this.cards.push({
+                id: i++,
+                pic: picture
+              });
+            }
           }
+        },
+        error => {
+          console.log('error');
         }
-      },
-      error => {
-        console.log('error');
-      }
-    );
-  };
-}
+      );
+    };
+  }
 
 }
