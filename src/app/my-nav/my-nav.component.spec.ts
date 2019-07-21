@@ -7,7 +7,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
 import { MyNavComponent } from './my-nav.component';
 
 describe('MyNavComponent', () => {
@@ -16,7 +15,7 @@ describe('MyNavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MyNavComponent],
+      declarations: [ MyNavComponent ],
       schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],
       imports: [
         NoopAnimationsModule,
@@ -25,7 +24,8 @@ describe('MyNavComponent', () => {
         MatIconModule,
         MatListModule,
         MatSidenavModule,
-        MatToolbarModule,
+        MatToolbarModule
+      
       ]
     }).compileComponents();
   }));

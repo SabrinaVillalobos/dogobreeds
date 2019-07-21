@@ -9,7 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { LottieAnimationViewModule } from 'ng-lottie';
 import { HomeComponent } from './home.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 describe('HomeComponent', () => {
@@ -19,7 +19,7 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
-      schemas: [ NO_ERRORS_SCHEMA ],
+      schemas: [ NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA ],
       imports: [
         NoopAnimationsModule,
         LayoutModule,
@@ -48,4 +48,36 @@ describe('HomeComponent', () => {
   it('should getRandomPics of dogs', () => {
     component.getRandomPics();
   })
+
+  describe('#getBreedsList', () => {
+    it('returned Observable should match the right data', () => {
+      // Mock data
+      const mockBreedList = {
+        message: {
+          affenpinscher: [],
+          african: [],
+          briard: [],
+          bulldog: [
+            'boston',
+            'english',
+            'french'
+          ],
+          bullterrier: [
+            'staffordshire'
+          ],
+          cairn: [],
+          cattledog: [
+            'australian'
+          ],
+          dachshund: [],
+          dalmatian: [],
+          dane: [
+            'great'
+          ]
+        },
+        status: 'success'
+      };
+
+    });
+  });
 });
