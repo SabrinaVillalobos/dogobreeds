@@ -7,27 +7,27 @@ import { Observable, of } from 'rxjs';
 })
 export class DogsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private https: HttpClient) { }
   getRandomPics(): Observable<any> {
 
-    return this.http.get("https://dog.ceo/api/breeds/image/random/5", {});
+    return this.https.get("https://dog.ceo/api/breeds/image/random/5", {});
   }
 
   getAllBreeds(): Observable<any> {
-    return this.http.get("https://dog.ceo/api/breeds/list/all", {});
+    return this.https.get("https://dog.ceo/api/breeds/list/all", {});
   }
 
   getRandomPicsForBreed(breed: string): Observable<any> {
-    return this.http.get(
+    return this.https.get(
       'https://dog.ceo/api/breed/' + breed + '/images/random/5', {});
   }
 
   getSubBreeds(breed: string): Observable<any> {
-    return this.http.get('https://dog.ceo/api/breed/' + breed + '/list/', {});
+    return this.https.get('https://dog.ceo/api/breed/' + breed + '/list/', {});
   }
 
   getRandomPicsForSubBreed(breed: string, subBreed: string): Observable<any> {
-    return this.http.get(
+    return this.https.get(
       'https://dog.ceo/api/breed/' + breed + '/' + subBreed + '/images/random/5', {});
   }
 }

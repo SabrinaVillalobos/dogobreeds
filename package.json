@@ -2,6 +2,7 @@
   "name": "dogapp",
   "version": "0.0.0",
   "scripts": {
+    "deploy": "ng build --prod --base-href https://sabrinavillalobos.github.io/dogobreeds/ && angular-cli-ghpages --branch gh-pages",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
